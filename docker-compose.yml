@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "1010"  # only development environment
+      POSTGRES_DB: "teddydb"  # only development environment
+    ports:
+      - "5432:5432"
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: teddy-finance-api
+    environment:
+      - PORT=${PORT}
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    volumes:
+      - ./src:/app/src
