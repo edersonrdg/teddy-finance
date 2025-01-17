@@ -2,8 +2,8 @@ services:
   db:
     image: postgres
     environment:
-      POSTGRES_PASSWORD: "1010"
-      POSTGRES_DB: "teddydb"
+      POSTGRES_PASSWORD: "1010"  # only development environment
+      POSTGRES_DB: "teddydb"  # only development environment
     ports:
       - "5432:5432"
   app:
