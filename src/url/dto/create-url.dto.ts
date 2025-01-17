@@ -1,8 +1,8 @@
-import { IsFQDN } from 'class-validator';
+import { IsUrl } from 'class-validator';
 
 export class CreateUrlDto {
-  @IsFQDN()
+  @IsUrl()
   original_url: string;
 
-  owner_id?: string;
+  shortened_url?: string;
 }
