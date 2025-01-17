@@ -1,21 +1,27 @@
-import { Controller, Post, Body, Inject } from '@nestjs/common';
+import { Controller, Post, Body, Inject, Get, UseGuards } from '@nestjs/common';
 import { CreateUrlDto } from './dto/create-url.dto';
 import { CreateUrlUseCase } from './usecases/create-url.usecase';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { GetAllUrlsUseCase } from './usecases/getAll-urls.usecase';
 
 @Controller('url')
 export class UrlController {
   @Inject()
   private createUrlUseCase: CreateUrlUseCase;
 
+  @Inject()
+  private getAllUrlsUseCase: GetAllUrlsUseCase;
+
   @Post()
   create(@Body() createUrlDto: CreateUrlDto) {
     return this.createUrlUseCase.execute(createUrlDto);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.urlService.findAll();
-  // }
+  @UseGuards(AuthGuard)
+  @Get()
+  findAll() {
+    return this.getAllUrlsUseCase.execute();
+  }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateUrlDto: UpdateUrlDto) {
