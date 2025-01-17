@@ -1,17 +1,5 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Inject,
-  Res,
-  Query,
-} from '@nestjs/common';
+import { Controller, Post, Body, Inject } from '@nestjs/common';
 import { CreateUrlDto } from './dto/create-url.dto';
-import { UpdateUrlDto } from './dto/update-url.dto';
 import { CreateUrlUseCase } from './usecases/create-url.usecase';
 
 @Controller('url')
