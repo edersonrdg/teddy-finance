@@ -16,7 +16,6 @@ export class SignInUseCase {
     const user = await this.userRepository.getUserByEmail(signInDto.email);
 
     if (!user || !bcrypt.compareSync(signInDto.password, user.password)) {
-      // throw new InvalidCredentialsError();
       throw new UnauthorizedException();
     }
 
