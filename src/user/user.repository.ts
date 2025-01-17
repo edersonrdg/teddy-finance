@@ -4,6 +4,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 export interface UserRepository {
   create(data: UserInput): Promise<User>;
+  getUserByEmail(email: string): Promise<User>;
 }
 
 @Injectable()
@@ -12,6 +13,12 @@ export class UserRepositoryPrismaDB implements UserRepository {
 
   async create(data: UserInput): Promise<User> {
     return await this.prismaService.user.create({ data });
+  }
+
+  async getUserByEmail(email: string): Promise<User> {
+    return await this.prismaService.user.findFirst({
+      where: { email },
+    });
   }
 }
 
