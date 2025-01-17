@@ -13,9 +13,8 @@ services:
     container_name: teddy-finance-api
     environment:
       - PORT=${PORT}
+      - DATABASE_URL=postgresql://postgres:1010@db:5432/teddydb
     ports:
       - '3000:3000'
-    depends_on:
-      - db
     volumes:
       - ./src:/app/src
