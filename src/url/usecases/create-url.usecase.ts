@@ -12,10 +12,12 @@ export class CreateUrlUseCase {
     private configService: ConfigService,
   ) {}
 
-  async execute(createUrlDto: CreateUrlDto) {
+  async execute(owner_id: string, createUrlDto: CreateUrlDto) {
     const shortenedUrl = Math.random().toString(36).slice(2, 8);
+
     await this.urlRepository.create({
       shortened_url: shortenedUrl,
+      owner_id,
       ...createUrlDto,
     });
 

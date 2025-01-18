@@ -7,6 +7,7 @@ import {
   UseGuards,
   Patch,
   Param,
+  Req,
 } from '@nestjs/common';
 import { CreateUrlDto } from './dto/create-url.dto';
 import { CreateUrlUseCase } from './usecases/create-url.usecase';
@@ -15,6 +16,7 @@ import { GetAllUrlsUseCase } from './usecases/get-all-urls.usecase';
 import { UpdateUrlDto } from './dto/update-url.dto';
 import { UpdateUrlUseCase } from './usecases/update-url.usecase';
 import { DeleteUrlUseCase } from './usecases/delete-url.usecase';
+import { Public } from '../auth/public.metadata';
 
 @Controller('url')
 export class UrlController {
@@ -30,15 +32,17 @@ export class UrlController {
   @Inject()
   private deleteUrlUseCase: DeleteUrlUseCase;
 
+  @Public()
+  @UseGuards(AuthGuard)
   @Post()
-  create(@Body() createUrlDto: CreateUrlDto) {
-    return this.createUrlUseCase.execute(createUrlDto);
+  create(@Req() { user }, @Body() createUrlDto: CreateUrlDto) {
+    return this.createUrlUseCase.execute(user?.sub, createUrlDto);
   }
 
   @UseGuards(AuthGuard)
   @Get()
-  findAll() {
-    return this.getAllUrlsUseCase.execute();
+  findAll(@Req() { user }) {
+    return this.getAllUrlsUseCase.execute(user);
   }
 
   @UseGuards(AuthGuard)

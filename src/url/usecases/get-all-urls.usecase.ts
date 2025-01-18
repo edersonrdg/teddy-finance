@@ -5,7 +5,8 @@ import { UrlRepositoryPrismaDB } from '../url.repository';
 export class GetAllUrlsUseCase {
   constructor(private urlRepository: UrlRepositoryPrismaDB) {}
 
-  async execute() {
+  async execute(user: { sub: string; email: string }) {
+    console.log(user);
     return await this.urlRepository.getAll();
   }
 }

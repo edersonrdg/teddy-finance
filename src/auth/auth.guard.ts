@@ -7,18 +7,27 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { ConfigService } from '../config/config.service';
+import { Reflector } from '@nestjs/core';
+import { IS_PUBLIC_KEY } from './public.metadata';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
+    private reflector: Reflector,
     private configService: ConfigService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    // Check if route is public
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
-    if (!token) {
+    if (!token && !isPublic) {
       throw new UnauthorizedException();
     }
     try {
@@ -29,6 +38,9 @@ export class AuthGuard implements CanActivate {
       // so that we can access it in our route handlers
       request['user'] = payload;
     } catch {
+      if (isPublic) {
+        return true;
+      }
       throw new UnauthorizedException();
     }
     return true;
