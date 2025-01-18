@@ -18,7 +18,7 @@ describe('Sign-In UseCase', () => {
   let hashingService: HashingService;
   let jwtService: JwtService;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [JwtModule.register({})],
       controllers: [],

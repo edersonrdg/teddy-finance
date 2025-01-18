@@ -12,7 +12,7 @@ describe('Create Url UseCase', () => {
   let createUrlUseCase: CreateUrlUseCase;
   let urlRepository: UrlRepositoryPrismaDB;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [ConfigModule],
       controllers: [],

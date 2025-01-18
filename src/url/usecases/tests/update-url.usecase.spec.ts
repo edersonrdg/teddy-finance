@@ -26,7 +26,7 @@ describe('Update Url UseCase', () => {
   let updateUrlUseCase: UpdateUrlUseCase;
   let urlRepository: UrlRepositoryPrismaDB;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [ConfigModule],
       controllers: [],

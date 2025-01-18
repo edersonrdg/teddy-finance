@@ -21,7 +21,7 @@ describe('Get All Urls UseCase', () => {
   let getAllUrlsUseCase: GetAllUrlsUseCase;
   let urlRepository: UrlRepositoryPrismaDB;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [ConfigModule],
       controllers: [],

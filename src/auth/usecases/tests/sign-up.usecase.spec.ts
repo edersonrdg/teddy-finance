@@ -19,7 +19,7 @@ describe('Sign-Up UseCase', () => {
   let userRepository: UserRepositoryPrismaDB;
   let hashingService: HashingService;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       controllers: [],
       providers: [
