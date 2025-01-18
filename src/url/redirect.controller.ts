@@ -13,6 +13,7 @@ export class UrlRedirectController {
     @Res() res: Response,
   ) {
     const url = await this.getUrlUseCase.execute(shortened_url);
+
     return res.redirect(url);
   }
 }
