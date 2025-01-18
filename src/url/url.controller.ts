@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { CreateUrlDto } from './dto/create-url.dto';
 import { CreateUrlUseCase } from './usecases/create-url.usecase';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 import { GetAllUrlsUseCase } from './usecases/get-all-urls.usecase';
 import { UpdateUrlDto } from './dto/update-url.dto';
 import { UpdateUrlUseCase } from './usecases/update-url.usecase';
