@@ -5,6 +5,7 @@ import { UpdateUrlDto } from './dto/update-url.dto';
 
 export interface UrlRepository {
   create(input: UrlInput): Promise<Url>;
+  getOne(id: string): Promise<Url>;
   getAll(filterInpt: UrlFilterInput): Promise<Url[]>;
   getByShortenedUrl(shortenedUrl: string): Promise<Url>;
   update(id: string, input: UpdateUrlDto): Promise<void>;
@@ -17,6 +18,10 @@ export class UrlRepositoryPrismaDB implements UrlRepository {
 
   async create(input: UrlInput): Promise<Url> {
     return this.prismaService.url.create({ data: input });
+  }
+
+  async getOne(id: string): Promise<Url> {
+    return this.prismaService.url.findFirst({ where: { id: id } });
   }
 
   async getByShortenedUrl(shortenedUrl: string): Promise<Url> {

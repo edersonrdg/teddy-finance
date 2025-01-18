@@ -47,8 +47,12 @@ export class UrlController {
 
   @UseGuards(AuthGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUrlDto: UpdateUrlDto) {
-    return this.updateUrlUseCase.execute(id, updateUrlDto);
+  update(
+    @Req() { user },
+    @Param('id') id: string,
+    @Body() updateUrlDto: UpdateUrlDto,
+  ) {
+    return this.updateUrlUseCase.execute(id, updateUrlDto, user?.sub);
   }
 
   @UseGuards(AuthGuard)
