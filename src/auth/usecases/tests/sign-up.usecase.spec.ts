@@ -5,7 +5,7 @@ import { Test } from '@nestjs/testing';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { HashingService } from '../../../hashing';
 
-describe('CatsController', () => {
+describe('Sign-Up UseCase', () => {
   const input = {
     email: 'email',
     password: 'password',
@@ -47,35 +47,33 @@ describe('CatsController', () => {
       .mockImplementation((password: string) => password);
   });
 
-  describe('Sign-Up UseCase', () => {
-    it('should return an success message on sign-up', async () => {
-      expect(await signUpUseCase.execute(input)).toBe(output);
-    });
+  it('should return an success message on sign-up', async () => {
+    expect(await signUpUseCase.execute(input)).toBe(output);
+  });
 
-    it('should call user repository to create user', async () => {
-      await signUpUseCase.execute(input);
+  it('should call user repository to create user', async () => {
+    await signUpUseCase.execute(input);
 
-      expect(userRepository.create).toHaveBeenCalledWith(input);
-    });
+    expect(userRepository.create).toHaveBeenCalledWith(input);
+  });
 
-    it('should call hashing service to hash password', async () => {
-      await signUpUseCase.execute(input);
+  it('should call hashing service to hash password', async () => {
+    await signUpUseCase.execute(input);
 
-      expect(hashingService.hashPassword).toHaveBeenCalledWith(input.password);
-    });
+    expect(hashingService.hashPassword).toHaveBeenCalledWith(input.password);
+  });
 
-    it('should call user repository to get user by email', async () => {
-      await signUpUseCase.execute(input);
+  it('should call user repository to get user by email', async () => {
+    await signUpUseCase.execute(input);
 
-      expect(userRepository.getUserByEmail).toHaveBeenCalledWith(input.email);
-    });
+    expect(userRepository.getUserByEmail).toHaveBeenCalledWith(input.email);
+  });
 
-    it('should throw an error on sign-up if email already exists', async () => {
-      jest
-        .spyOn(userRepository, 'getUserByEmail')
-        .mockImplementation(async () => output);
+  it('should throw an error on sign-up if email already exists', async () => {
+    jest
+      .spyOn(userRepository, 'getUserByEmail')
+      .mockImplementation(async () => output);
 
-      expect(signUpUseCase.execute(input)).rejects.toThrow();
-    });
+    expect(signUpUseCase.execute(input)).rejects.toThrow();
   });
 });
