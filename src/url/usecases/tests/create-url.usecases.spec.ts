@@ -25,6 +25,10 @@ describe('Create Url UseCase', () => {
     jest.spyOn(urlRepository, 'create').mockImplementation(async () => null);
   });
 
+  it('should be defined', () => {
+    expect(createUrlUseCase).toBeDefined();
+  });
+
   it('should return an success message on create url', async () => {
     const result = await createUrlUseCase.execute(null, input);
     expect(result).toHaveProperty('link');
