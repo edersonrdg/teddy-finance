@@ -21,24 +21,26 @@ export class UrlRepositoryPrismaDB implements UrlRepository {
   }
 
   async getOne(id: string): Promise<Url> {
-    return this.prismaService.url.findFirst({ where: { id: id } });
+    return this.prismaService.url.findFirst({
+      where: { id: id, deleted_at: null },
+    });
   }
 
   async getByShortenedUrl(shortenedUrl: string): Promise<Url> {
     return this.prismaService.url.findFirst({
-      where: { shortened_url: shortenedUrl },
+      where: { shortened_url: shortenedUrl, deleted_at: null },
     });
   }
 
   async getAll(filterInpt: UrlFilterInput): Promise<Url[]> {
     return this.prismaService.url.findMany({
-      where: filterInpt,
+      where: { ...filterInpt, deleted_at: null },
     });
   }
 
   async update(id: string, input: UpdateUrlDto): Promise<void> {
     await this.prismaService.url.update({
-      where: { id: id },
+      where: { id: id, deleted_at: null },
       data: input,
     });
   }
