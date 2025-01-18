@@ -42,7 +42,7 @@ export class UrlController {
   @UseGuards(AuthGuard)
   @Get()
   findAll(@Req() { user }) {
-    return this.getAllUrlsUseCase.execute(user);
+    return this.getAllUrlsUseCase.execute(user?.sub);
   }
 
   @UseGuards(AuthGuard)

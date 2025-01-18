@@ -5,7 +5,7 @@ import { UpdateUrlDto } from './dto/update-url.dto';
 
 export interface UrlRepository {
   create(input: UrlInput): Promise<Url>;
-  getAll(): Promise<Url[]>;
+  getAll(filterInpt: UrlFilterInput): Promise<Url[]>;
   getByShortenedUrl(shortenedUrl: string): Promise<Url>;
   update(id: string, input: UpdateUrlDto): Promise<void>;
   delete(id: string): Promise<void>;
@@ -25,8 +25,10 @@ export class UrlRepositoryPrismaDB implements UrlRepository {
     });
   }
 
-  async getAll(): Promise<Url[]> {
-    return this.prismaService.url.findMany();
+  async getAll(filterInpt: UrlFilterInput): Promise<Url[]> {
+    return this.prismaService.url.findMany({
+      where: filterInpt,
+    });
   }
 
   async update(id: string, input: UpdateUrlDto): Promise<void> {
@@ -44,6 +46,10 @@ export class UrlRepositoryPrismaDB implements UrlRepository {
     });
   }
 }
+
+type UrlFilterInput = {
+  owner_id?: string;
+};
 
 type UrlInput = {
   original_url: string;
