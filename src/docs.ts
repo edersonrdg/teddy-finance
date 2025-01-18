@@ -6,6 +6,7 @@ export const swaggerDocumentation = (app: INestApplication) => {
     .setTitle('TEDDY FINANCE API')
     .setDescription('TEDDY FINANCE API')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
