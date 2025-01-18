@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { SignUpDto } from '../dtos/sign-up.dto';
-import { UserRepositoryPrismaDB } from 'src/user/user.repository';
+import { UserRepositoryPrismaDB } from '../../user/user.repository';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()

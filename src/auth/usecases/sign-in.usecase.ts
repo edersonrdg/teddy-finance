@@ -2,7 +2,7 @@ import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { SignInDto } from '../dtos/sign-in.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { UserRepositoryPrismaDB } from 'src/user/user.repository';
+import { UserRepositoryPrismaDB } from '../../user/user.repository';
 
 @Injectable()
 export class SignInUseCase {
