@@ -8,7 +8,7 @@ export interface UrlRepository {
   getOne(id: string): Promise<Url>;
   getAll(filterInpt: UrlFilterInput): Promise<Url[]>;
   getByShortenedUrl(shortenedUrl: string): Promise<Url>;
-  incrementClicks(id: string): Promise<void>;
+  incrementClicks(url: Url): Promise<void>;
   update(id: string, input: UpdateUrlDto): Promise<void>;
   delete(id: string): Promise<void>;
 }
@@ -39,10 +39,10 @@ export class UrlRepositoryPrismaDB implements UrlRepository {
     });
   }
 
-  async incrementClicks(id: string): Promise<void> {
+  async incrementClicks(url: Url): Promise<void> {
     await this.prismaService.url.update({
-      where: { id: id, deleted_at: null },
-      data: { access_count: { increment: 1 } },
+      where: { id: url.id, deleted_at: null },
+      data: { access_count: { increment: 1 }, updated_at: url.updated_at },
     });
   }
 
