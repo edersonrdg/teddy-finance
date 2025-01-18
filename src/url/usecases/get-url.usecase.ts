@@ -12,6 +12,8 @@ export class GetUrlUseCase {
       throw new BadRequestException('Url does not exist!');
     }
 
+    await this.urlRepository.incrementClicks(url);
+
     return url.original_url;
   }
 }
