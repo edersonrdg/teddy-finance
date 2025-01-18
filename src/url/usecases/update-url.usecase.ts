@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UrlRepositoryPrismaDB } from '../url.repository';
 import { UpdateUrlDto } from '../dto/update-url.dto';
 
@@ -10,7 +15,7 @@ export class UpdateUrlUseCase {
     const url = await this.urlRepository.getOne(id);
 
     if (!url) {
-      throw new BadRequestException('Url does not exist!');
+      throw new NotFoundException('Url does not exist!');
     }
 
     if (
@@ -20,7 +25,7 @@ export class UpdateUrlUseCase {
     }
 
     if (url.owner_id !== owner_id) {
-      throw new BadRequestException('Url does not belong to you!');
+      throw new UnauthorizedException('Url does not belong to you!');
     }
 
     await this.urlRepository.update(id, updateUrlDto);
