@@ -57,7 +57,7 @@ export class UrlController {
 
   @UseGuards(AuthGuard)
   @Patch(':id/delete')
-  remove(@Param('id') id: string) {
-    return this.deleteUrlUseCase.execute(id);
+  remove(@Req() { user }, @Param('id') id: string) {
+    return this.deleteUrlUseCase.execute(id, user?.sub);
   }
 }
