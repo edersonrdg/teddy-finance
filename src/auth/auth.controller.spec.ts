@@ -5,6 +5,7 @@ import { SignUpUseCase } from './usecases/sign-up.usecase';
 import { SignInUseCase } from './usecases/sign-in.usecase';
 import { PrismaModule } from '../prisma/prisma.module';
 import { JwtModule } from '@nestjs/jwt';
+import { HashingService } from '../hashing';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -13,7 +14,12 @@ describe('AuthController', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [PrismaModule, JwtModule.register({})],
       controllers: [AuthController],
-      providers: [UserRepositoryPrismaDB, SignUpUseCase, SignInUseCase],
+      providers: [
+        HashingService,
+        UserRepositoryPrismaDB,
+        SignUpUseCase,
+        SignInUseCase,
+      ],
     }).compile();
 
     controller = module.get<AuthController>(AuthController);

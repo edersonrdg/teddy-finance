@@ -4,6 +4,7 @@ import { SignUpUseCase } from './usecases/sign-up.usecase';
 import { SignInUseCase } from './usecases/sign-in.usecase';
 import { UserRepositoryPrismaDB } from 'src/user/user.repository';
 import { JwtModule } from '@nestjs/jwt';
+import { HashingService } from '../hashing';
 
 @Module({
   imports: [
@@ -14,6 +15,11 @@ import { JwtModule } from '@nestjs/jwt';
     }),
   ],
   controllers: [AuthController],
-  providers: [UserRepositoryPrismaDB, SignUpUseCase, SignInUseCase],
+  providers: [
+    HashingService,
+    UserRepositoryPrismaDB,
+    SignUpUseCase,
+    SignInUseCase,
+  ],
 })
 export class AuthModule {}
