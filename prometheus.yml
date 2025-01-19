@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 15s # Intervalo para coletar as métricas
+  evaluation_interval: 15s # Intervalo para avaliação de regras
+
+scrape_configs:
+  - job_name: 'teddy-finance'
+    metrics_path: '/metrics' # Endpoint exposto pelo NestJS
+    static_configs:
+      - targets: ['localhost:3000'] # URL do serviço a ser monitorado

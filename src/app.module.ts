@@ -4,9 +4,17 @@ import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { UrlModule } from './url/url.module';
 import { LoggerModule } from './Logger/logger.module';
+import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 
 @Module({
-  imports: [PrismaModule, ConfigModule, LoggerModule, AuthModule, UrlModule],
+  imports: [
+    PrometheusModule.register(),
+    ConfigModule,
+    PrismaModule,
+    LoggerModule,
+    AuthModule,
+    UrlModule,
+  ],
   controllers: [],
   providers: [],
 })
