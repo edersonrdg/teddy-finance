@@ -4,6 +4,8 @@ import { UserRepositoryPrismaDB } from '../../../user/user.repository';
 import { Test } from '@nestjs/testing';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { HashingService } from '../../../hashing';
+import { LoggerModule } from '../../../Logger/logger.module';
+import { LoggerService } from '../../../Logger/logger.service';
 
 describe('Sign-Up UseCase', () => {
   const input = {
@@ -18,9 +20,11 @@ describe('Sign-Up UseCase', () => {
   let signUpUseCase: SignUpUseCase;
   let userRepository: UserRepositoryPrismaDB;
   let hashingService: HashingService;
+  let logger: LoggerService;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
+      imports: [LoggerModule],
       controllers: [],
       providers: [
         PrismaService,
@@ -35,6 +39,9 @@ describe('Sign-Up UseCase', () => {
       UserRepositoryPrismaDB,
     );
     hashingService = moduleRef.get<HashingService>(HashingService);
+    logger = moduleRef.get<LoggerService>(LoggerService);
+
+    jest.spyOn(logger, 'log').mockImplementation();
 
     jest
       .spyOn(userRepository, 'getUserByEmail')

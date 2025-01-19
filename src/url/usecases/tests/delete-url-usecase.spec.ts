@@ -3,6 +3,8 @@ import { PrismaService } from '../../../prisma/prisma.service';
 import { UrlRepositoryPrismaDB } from '../../url.repository';
 import { ConfigModule } from '../../../config/config.module';
 import { DeleteUrlUseCase } from '../delete-url.usecase';
+import { LoggerModule } from '../../../Logger/logger.module';
+import { LoggerService } from '../../../Logger/logger.service';
 
 describe('Update Url UseCase', () => {
   const url = {
@@ -23,10 +25,11 @@ describe('Update Url UseCase', () => {
 
   let deleteUrlUseCase: DeleteUrlUseCase;
   let urlRepository: UrlRepositoryPrismaDB;
+  let logger: LoggerService;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [ConfigModule],
+      imports: [ConfigModule, LoggerModule],
       controllers: [],
       providers: [DeleteUrlUseCase, UrlRepositoryPrismaDB, PrismaService],
     }).compile();
@@ -34,8 +37,12 @@ describe('Update Url UseCase', () => {
     deleteUrlUseCase = moduleRef.get<DeleteUrlUseCase>(DeleteUrlUseCase);
     urlRepository = moduleRef.get<UrlRepositoryPrismaDB>(UrlRepositoryPrismaDB);
 
+    logger = moduleRef.get<LoggerService>(LoggerService);
+
     jest.spyOn(urlRepository, 'getOne').mockImplementation(async () => url);
     jest.spyOn(urlRepository, 'delete').mockImplementation(async () => null);
+
+    jest.spyOn(logger, 'log').mockImplementation();
   });
 
   it('should be defined', () => {

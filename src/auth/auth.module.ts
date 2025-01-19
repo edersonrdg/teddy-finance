@@ -5,6 +5,7 @@ import { SignInUseCase } from './usecases/sign-in.usecase';
 import { UserRepositoryPrismaDB } from 'src/user/user.repository';
 import { JwtModule } from '@nestjs/jwt';
 import { HashingService } from '../hashing';
+import { LoggerModule } from '../Logger/logger.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { HashingService } from '../hashing';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '1d' },
     }),
+    LoggerModule,
   ],
   controllers: [AuthController],
   providers: [

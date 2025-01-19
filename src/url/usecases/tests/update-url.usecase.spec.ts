@@ -4,6 +4,8 @@ import { UrlRepositoryPrismaDB } from '../../url.repository';
 import { ConfigModule } from '../../../config/config.module';
 import { UpdateUrlUseCase } from '../update-url.usecase';
 import { BadRequestException } from '@nestjs/common';
+import { LoggerModule } from '../../../Logger/logger.module';
+import { LoggerService } from '../../../Logger/logger.service';
 
 describe('Update Url UseCase', () => {
   const url = {
@@ -25,17 +27,20 @@ describe('Update Url UseCase', () => {
 
   let updateUrlUseCase: UpdateUrlUseCase;
   let urlRepository: UrlRepositoryPrismaDB;
+  let logger: LoggerService;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [ConfigModule],
+      imports: [ConfigModule, LoggerModule],
       controllers: [],
       providers: [UpdateUrlUseCase, UrlRepositoryPrismaDB, PrismaService],
     }).compile();
 
     updateUrlUseCase = moduleRef.get<UpdateUrlUseCase>(UpdateUrlUseCase);
     urlRepository = moduleRef.get<UrlRepositoryPrismaDB>(UrlRepositoryPrismaDB);
+    logger = moduleRef.get<LoggerService>(LoggerService);
 
+    jest.spyOn(logger, 'log').mockImplementation();
     jest.spyOn(urlRepository, 'getOne').mockImplementation(async () => url);
 
     jest

@@ -3,6 +3,8 @@ import { PrismaService } from '../../../prisma/prisma.service';
 import { UrlRepositoryPrismaDB } from '../../url.repository';
 import { ConfigModule } from '../../../config/config.module';
 import { GetUrlUseCase } from '../get-url.usecase';
+import { LoggerModule } from '../../../Logger/logger.module';
+import { LoggerService } from '../../../Logger/logger.service';
 
 describe('Get Url UseCase', () => {
   const url = {
@@ -16,16 +18,20 @@ describe('Get Url UseCase', () => {
   };
   let getUrlUseCase: GetUrlUseCase;
   let urlRepository: UrlRepositoryPrismaDB;
+  let logger: LoggerService;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [ConfigModule],
+      imports: [ConfigModule, LoggerModule],
       controllers: [],
       providers: [GetUrlUseCase, UrlRepositoryPrismaDB, PrismaService],
     }).compile();
 
     getUrlUseCase = moduleRef.get<GetUrlUseCase>(GetUrlUseCase);
     urlRepository = moduleRef.get<UrlRepositoryPrismaDB>(UrlRepositoryPrismaDB);
+    logger = moduleRef.get<LoggerService>(LoggerService);
+
+    jest.spyOn(logger, 'log').mockImplementation();
 
     jest
       .spyOn(urlRepository, 'getByShortenedUrl')
