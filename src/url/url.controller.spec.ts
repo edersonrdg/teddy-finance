@@ -10,6 +10,9 @@ import { PrismaModule } from '../prisma/prisma.module';
 import { ConfigModule } from '../config/config.module';
 import { JwtModule } from '@nestjs/jwt';
 import { LoggerModule } from '../Logger/logger.module';
+import { MetricModule } from '../metrics/metric.module';
+import { RedisService } from '../redis/redis.service';
+import { RedisCacheModule } from '../redis/redis.module';
 
 describe('UrlController', () => {
   let controller: UrlController;
@@ -21,9 +24,12 @@ describe('UrlController', () => {
         PrismaModule,
         LoggerModule,
         JwtModule.register({}),
+        MetricModule,
+        RedisCacheModule,
       ],
       controllers: [UrlController],
       providers: [
+        RedisService,
         UrlRepositoryPrismaDB,
         GetUrlUseCase,
         CreateUrlUseCase,

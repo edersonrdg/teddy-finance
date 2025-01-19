@@ -1,18 +1,16 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UrlRepositoryPrismaDB } from '../url.repository';
 import { LoggerService } from '../../Logger/logger.service';
-import { InjectMetric } from '@willsoto/nestjs-prometheus';
-import { Counter } from 'prom-client';
-import Redis from 'ioredis';
-import { InjectRedis } from '@nestjs-modules/ioredis';
+import { MetricService } from '../../metrics/metric.service';
+import { RedisService } from '../../redis/redis.service';
 
 @Injectable()
 export class GetUrlUseCase {
   constructor(
     private urlRepository: UrlRepositoryPrismaDB,
     private logger: LoggerService,
-    @InjectRedis() private redis: Redis,
-    @InjectMetric('url_redirections_total') public counter: Counter<string>,
+    private metricService: MetricService,
+    private redisService: RedisService,
   ) {}
 
   async execute(shortened_url: string) {
@@ -24,10 +22,10 @@ export class GetUrlUseCase {
     }
 
     // increment clicks on db
-    this.redis.incr(url.shortened_url);
+    await this.redisService.incr(url.shortened_url);
 
     // increment counter metric
-    this.counter.inc();
+    this.metricService.incrementCountMetric();
 
     return url.original_url;
   }
