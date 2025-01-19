@@ -67,7 +67,6 @@ export class UrlController {
   @UseGuards(AuthGuard)
   @Get()
   findAll(@Req() { user }) {
-    console.log(user);
     return this.getAllUrlsUseCase.execute(user?.sub);
   }
 
