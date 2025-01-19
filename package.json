@@ -8,9 +8,9 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "prisma-migrate-dev": "docker exec teddy-finance-api npx prisma migrate dev",
     "migrate": "npx prisma migrate dev",
-    "up:dev": "docker compose up",
+    "up": "docker compose up",
+    "up:migrate": "docker exec teddy-finance-api npx prisma migrate dev",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
