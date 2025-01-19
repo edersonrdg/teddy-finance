@@ -9,11 +9,16 @@ import { GetAllUrlsUseCase } from './usecases/get-all-urls.usecase';
 import { UpdateUrlUseCase } from './usecases/update-url.usecase';
 import { DeleteUrlUseCase } from './usecases/delete-url.usecase';
 import { LoggerModule } from '../Logger/logger.module';
+import { makeCounterProvider } from '@willsoto/nestjs-prometheus';
 
 @Module({
   imports: [ConfigModule, LoggerModule],
   controllers: [UrlController, UrlRedirectController],
   providers: [
+    makeCounterProvider({
+      name: 'url_redirections_total',
+      help: 'Total de redirecionamentos realizados',
+    }),
     UrlRepositoryPrismaDB,
     GetUrlUseCase,
     CreateUrlUseCase,
