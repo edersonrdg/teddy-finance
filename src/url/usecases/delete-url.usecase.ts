@@ -4,12 +4,17 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { UrlRepositoryPrismaDB } from '../url.repository';
+import { LoggerService } from '../../Logger/logger.service';
 
 @Injectable()
 export class DeleteUrlUseCase {
-  constructor(private urlRepository: UrlRepositoryPrismaDB) {}
+  constructor(
+    private urlRepository: UrlRepositoryPrismaDB,
+    private logger: LoggerService,
+  ) {}
 
   async execute(id: string, owner_id?: string) {
+    this.logger.log(`[DELETE_URL] Deleting URL for user ${owner_id}`);
     const url = await this.urlRepository.getOne(id);
 
     if (!url) {

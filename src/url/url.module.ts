@@ -8,9 +8,10 @@ import { UrlRedirectController } from './redirect.controller';
 import { GetAllUrlsUseCase } from './usecases/get-all-urls.usecase';
 import { UpdateUrlUseCase } from './usecases/update-url.usecase';
 import { DeleteUrlUseCase } from './usecases/delete-url.usecase';
+import { LoggerModule } from '../Logger/logger.module';
 
 @Module({
-  imports: [ConfigModule],
+  imports: [ConfigModule, LoggerModule],
   controllers: [UrlController, UrlRedirectController],
   providers: [
     UrlRepositoryPrismaDB,

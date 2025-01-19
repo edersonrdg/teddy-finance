@@ -6,12 +6,17 @@ import {
 } from '@nestjs/common';
 import { UrlRepositoryPrismaDB } from '../url.repository';
 import { UpdateUrlDto } from '../dto/update-url.dto';
+import { LoggerService } from '../../Logger/logger.service';
 
 @Injectable()
 export class UpdateUrlUseCase {
-  constructor(private urlRepository: UrlRepositoryPrismaDB) {}
+  constructor(
+    private urlRepository: UrlRepositoryPrismaDB,
+    private logger: LoggerService,
+  ) {}
 
   async execute(id: string, updateUrlDto: UpdateUrlDto, owner_id?: string) {
+    this.logger.log(`[UPDATE_URL] Updating URL for user ${owner_id}`);
     const url = await this.urlRepository.getOne(id);
 
     if (!url) {
