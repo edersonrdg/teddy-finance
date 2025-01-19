@@ -6,4 +6,4 @@ scrape_configs:
   - job_name: 'teddy-finance'
     metrics_path: '/metrics' # Endpoint exposto pelo NestJS
     static_configs:
-      - targets: ['localhost:3000'] # URL do serviço a ser monitorado
+      - targets: ['teddy-finance-api:3000'] # URL do serviço a ser monitorado
