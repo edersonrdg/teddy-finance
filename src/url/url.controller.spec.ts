@@ -9,13 +9,19 @@ import { DeleteUrlUseCase } from './usecases/delete-url.usecase';
 import { PrismaModule } from '../prisma/prisma.module';
 import { ConfigModule } from '../config/config.module';
 import { JwtModule } from '@nestjs/jwt';
+import { LoggerModule } from '../Logger/logger.module';
 
 describe('UrlController', () => {
   let controller: UrlController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [ConfigModule, PrismaModule, JwtModule.register({})],
+      imports: [
+        ConfigModule,
+        PrismaModule,
+        LoggerModule,
+        JwtModule.register({}),
+      ],
       controllers: [UrlController],
       providers: [
         UrlRepositoryPrismaDB,

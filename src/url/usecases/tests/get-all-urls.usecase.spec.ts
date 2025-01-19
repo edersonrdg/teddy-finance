@@ -4,6 +4,8 @@ import { UrlRepositoryPrismaDB } from '../../url.repository';
 import { ConfigModule } from '../../../config/config.module';
 import { GetAllUrlsUseCase } from '../get-all-urls.usecase';
 import { Url } from '../../../url/entities/url.entity';
+import { LoggerModule } from '../../../Logger/logger.module';
+import { LoggerService } from '../../../Logger/logger.service';
 
 describe('Get All Urls UseCase', () => {
   const output: Url[] = [
@@ -20,18 +22,22 @@ describe('Get All Urls UseCase', () => {
 
   let getAllUrlsUseCase: GetAllUrlsUseCase;
   let urlRepository: UrlRepositoryPrismaDB;
+  let logger: LoggerService;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [ConfigModule],
+      imports: [ConfigModule, LoggerModule],
       controllers: [],
       providers: [GetAllUrlsUseCase, UrlRepositoryPrismaDB, PrismaService],
     }).compile();
 
     getAllUrlsUseCase = moduleRef.get<GetAllUrlsUseCase>(GetAllUrlsUseCase);
     urlRepository = moduleRef.get<UrlRepositoryPrismaDB>(UrlRepositoryPrismaDB);
+    logger = moduleRef.get<LoggerService>(LoggerService);
 
     jest.spyOn(urlRepository, 'getAll').mockImplementation(async () => output);
+
+    jest.spyOn(logger, 'log').mockImplementation();
   });
 
   it('should be defined', () => {

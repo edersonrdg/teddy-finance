@@ -3,6 +3,8 @@ import { PrismaService } from '../../../prisma/prisma.service';
 import { CreateUrlUseCase } from '../create-url.usecase';
 import { UrlRepositoryPrismaDB } from '../../url.repository';
 import { ConfigModule } from '../../../config/config.module';
+import { LoggerModule } from '../../../Logger/logger.module';
+import { LoggerService } from '../../../Logger/logger.service';
 
 describe('Create Url UseCase', () => {
   const input = {
@@ -11,18 +13,22 @@ describe('Create Url UseCase', () => {
 
   let createUrlUseCase: CreateUrlUseCase;
   let urlRepository: UrlRepositoryPrismaDB;
+  let logger: LoggerService;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [ConfigModule],
+      imports: [ConfigModule, LoggerModule],
       controllers: [],
       providers: [CreateUrlUseCase, UrlRepositoryPrismaDB, PrismaService],
     }).compile();
 
+    logger = moduleRef.get<LoggerService>(LoggerService);
     createUrlUseCase = moduleRef.get<CreateUrlUseCase>(CreateUrlUseCase);
     urlRepository = moduleRef.get<UrlRepositoryPrismaDB>(UrlRepositoryPrismaDB);
 
     jest.spyOn(urlRepository, 'create').mockImplementation(async () => null);
+
+    jest.spyOn(logger, 'log').mockImplementation();
   });
 
   it('should be defined', () => {
