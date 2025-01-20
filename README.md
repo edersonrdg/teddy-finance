@@ -105,7 +105,7 @@ Foi útilizado [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workf
 
 - [0.1.0](https://github.com/edersonrdg/teddy-finance/tree/release/0.1.0) - Cadastro e Autorização.
 - [0.2.0](https://github.com/edersonrdg/teddy-finance/tree/release/0.2.0) - Serviço de encurtador de URLs.
-- [0.3.0](https://github.com/edersonrdg/teddy-finance/tree/release/0.2.0) - CRUD de URLs, com autorização e monitoramento de métricas.
+- [0.3.0](https://github.com/edersonrdg/teddy-finance/tree/release/0.3.0) - CRUD de URLs, com autorização e monitoramento de métricas.
 
 ## Autor
 
