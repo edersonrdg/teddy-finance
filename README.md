@@ -35,8 +35,6 @@ npm install
 npm run migrate
 ```
 
-Termine com um exemplo de como obter dados do sistema ou como usá-los para uma pequena demonstração.
-
 ## ⚓️ Docker e Docker Compose
 Para executar os serviços do docker, basta executar o seguinte comando:
 
