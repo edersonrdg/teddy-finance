@@ -18,7 +18,7 @@ git clone https://github.com/edersonrdg/teddy-finance
 cd teddy-finance
 ```
 
-Com o projeto aberto. Adicione as variáveis necessárias no arquivo ".env". Exemplo presente no .env.example.
+Com o projeto aberto. Crie um arquivo ".env" e Adicione as variáveis necessárias. (Exemplo no .env.example, Não é necessário caso use Docker Compose)
 ```
 DATABASE_URL=
 JWT_SECRET=
@@ -31,7 +31,10 @@ Por fim, caso não utilize [Docker Compose](), execute os seguintes comandos:
 # instale todas as dependências
 npm install
 
-# migration que gera as tabelas do sistema
+# inicie a api
+npm run start:dev
+
+# em outro terminal, rode as migrations que gera as tabelas do sistema
 npm run migrate
 ```
 
@@ -40,16 +43,14 @@ Para executar os serviços do docker, basta executar o seguinte comando:
 
 ```
 npm run up
-
-# OBS
-# Se caso não tiver sido executado o comando de seed ainda. Basta executar o seguinte comando enquanto roda os containers.
-npm run up:migrate
 ```
+
+Todas as variáveis de ambientes, dependências e comandos seram transcritos automáticamente.
 
 ## ⚙️ Executando os testes
 
 ```
-npm run tests
+npm test
 ```
 
 ### 🔩 Análise de métricas.
