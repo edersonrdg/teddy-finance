@@ -32,6 +32,7 @@ services:
     depends_on:
       - db
       - redis
+    command: sh -c "npx prisma migrate dev && npm run start:dev"
         
   prometheus:
     image: prom/prometheus:latest

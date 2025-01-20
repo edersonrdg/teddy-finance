@@ -1,14 +1,14 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateUrlDto } from './create-url.dto';
-import { MaxLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsUrl } from 'class-validator';
 
 export class UpdateUrlDto extends PartialType(CreateUrlDto) {
   @ApiProperty({
-    example: 'scgasz',
+    example: 'https://google.com',
     required: true,
     type: 'string',
   })
-  @MaxLength(6)
-  shortened_url: string;
+  @IsUrl()
+  original_url: string;
 }

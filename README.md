@@ -6,7 +6,7 @@ Api que tem o objetivo de encurtar URLs.
 
 ### 📋 Pré-requisitos
 
-O Sistema foi desenvolvido com a útima versão estável do [Nodejs](https://nodejs.org/en), além de usar os bancos de dados [Postgresql](https://www.postgresql.org/) e [Redis](https://redis.io/).
+O Sistema foi desenvolvido com a última versão estável do [Nodejs](https://nodejs.org/en), além de usar os bancos de dados [Postgresql](https://www.postgresql.org/) e [Redis](https://redis.io/).
 
 
 ### 🔧 Instalação
@@ -18,7 +18,7 @@ git clone https://github.com/edersonrdg/teddy-finance
 cd teddy-finance
 ```
 
-Com o projeto aberto. Adicione as variáveis necessárias no arquivo ".env". Exemplo presente no .env.example.
+Com o projeto aberto. Crie um arquivo ".env" e adicione as variáveis necessárias. (Exemplo no .env.example, Não é necessário caso use Docker Compose)
 ```
 DATABASE_URL=
 JWT_SECRET=
@@ -31,7 +31,10 @@ Por fim, caso não utilize [Docker Compose](), execute os seguintes comandos:
 # instale todas as dependências
 npm install
 
-# migration que gera as tabelas do sistema
+# inicie a api
+npm run start:dev
+
+# em outro terminal, rode as migrations que gera as tabelas do sistema
 npm run migrate
 ```
 
@@ -40,21 +43,19 @@ Para executar os serviços do docker, basta executar o seguinte comando:
 
 ```
 npm run up
-
-# OBS
-# Se caso não tiver sido executado o comando de seed ainda. Basta executar o seguinte comando enquanto roda os containers.
-npm run up:migrate
 ```
+
+Todas as variáveis de ambientes, dependências e comandos serão transcritos automaticamente.
 
 ## ⚙️ Executando os testes
 
 ```
-npm run tests
+npm test
 ```
 
 ### 🔩 Análise de métricas.
 
-O Projeto conta com rotas para análise de métricas. Incluíndo métricas específicas como contagem de redirecionamentos realizados.
+O Projeto conta com rotas para análise de métricas. Incluindo métricas específicas como contagem de redirecionamentos realizados.
 
 <img src="https://i.ibb.co/QpSD1DT/Captura-de-tela-de-2025-01-19-21-52-34.png" width="700" />
 
@@ -81,9 +82,12 @@ A Documentação completa da API está disponível na rota: docs.
 http:localhost:3000/docs
 ```
 
-## 📦 Implantação
+## 📦 Melhorias
 
-Adicione notas adicionais sobre como implantar isso em um sistema ativo
+- Validar URLs de origem: Garantir que urls de origem não causem vulnerabilidades durante o redirecionamento.
+- Criar mais estatísticas para métricas: Além da contagem de clicks, informações de localização e identidade dos usuários que executam.
+- Permitir edição de URL encurtada: Usuário deve conseguir editar uma url encurtada e adicionar uma de sua preferência, contando que não seja existente.
+- Controle de usuários e Dashboard Administrativo: Adição de níveis de permissão, incluindo perfil administrativo para ter acesso a um dashboard administrativo para visualizar estatísticas.
 
 ## 🛠️ Construído com
 
@@ -99,7 +103,7 @@ Adicione notas adicionais sobre como implantar isso em um sistema ativo
 
 ## 📌 Versão
 
-Foi útilizado [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) para controle de versão. As releases disponíveis são:
+Foi utilizado [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) para controle de versão. As releases disponíveis são:
 
 - [0.1.0](https://github.com/edersonrdg/teddy-finance/tree/release/0.1.0) - Cadastro e Autorização.
 - [0.2.0](https://github.com/edersonrdg/teddy-finance/tree/release/0.2.0) - Serviço de encurtador de URLs.

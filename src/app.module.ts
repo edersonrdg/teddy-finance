@@ -6,9 +6,13 @@ import { UrlModule } from './url/url.module';
 import { LoggerModule } from './Logger/logger.module';
 import { MetricModule } from './metrics/metric.module';
 import { RedisCacheModule } from './redis/redis.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { SyncCountService } from './schedule';
+import { UrlRepositoryPrismaDB } from './url/url.repository';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     RedisCacheModule,
     MetricModule,
     ConfigModule,
@@ -18,6 +22,6 @@ import { RedisCacheModule } from './redis/redis.module';
     UrlModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [UrlRepositoryPrismaDB, SyncCountService],
 })
 export class AppModule {}
