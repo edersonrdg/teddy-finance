@@ -1,21 +1,27 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { SignInDto } from '../dtos/sign-in.dto';
 import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
-import { UserRepositoryPrismaDB } from 'src/user/user.repository';
+import { UserRepositoryPrismaDB } from '../../user/user.repository';
+import { HashingService } from '../../hashing';
+import { LoggerService } from '../../Logger/logger.service';
 
 @Injectable()
 export class SignInUseCase {
-  @Inject()
-  private userRepository: UserRepositoryPrismaDB;
-
-  @Inject()
-  private jwtService: JwtService;
+  constructor(
+    private userRepository: UserRepositoryPrismaDB,
+    private jwtService: JwtService,
+    private hashingService: HashingService,
+    private logger: LoggerService,
+  ) {}
 
   async execute(signInDto: SignInDto) {
+    this.logger.log('[SIGN IN] User trying to sign in');
     const user = await this.userRepository.getUserByEmail(signInDto.email);
 
-    if (!user || !bcrypt.compareSync(signInDto.password, user.password)) {
+    if (
+      !user ||
+      !this.hashingService.comparePassword(signInDto.password, user.password)
+    ) {
       throw new UnauthorizedException();
     }
 
