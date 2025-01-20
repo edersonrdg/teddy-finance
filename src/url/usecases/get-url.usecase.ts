@@ -22,7 +22,7 @@ export class GetUrlUseCase {
     }
 
     // increment clicks on db
-    await this.redisService.incr(url.shortened_url);
+    await this.redisService.incr(`${url.id}:${url.shortened_url}`);
 
     // increment counter metric
     this.metricService.incrementCountMetric();
