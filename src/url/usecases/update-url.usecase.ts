@@ -23,12 +23,6 @@ export class UpdateUrlUseCase {
       throw new NotFoundException('Url does not exist!');
     }
 
-    if (
-      await this.urlRepository.getByShortenedUrl(updateUrlDto.shortened_url)
-    ) {
-      throw new BadRequestException('Url already exists!');
-    }
-
     if (url.owner_id !== owner_id) {
       throw new UnauthorizedException('Url does not belong to you!');
     }
