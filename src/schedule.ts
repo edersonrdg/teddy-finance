@@ -12,7 +12,7 @@ export class SyncCountService {
     private urlRepository: UrlRepositoryPrismaDB,
   ) {}
 
-  @Cron(CronExpression.EVERY_MINUTE)
+  @Cron(CronExpression.EVERY_5_SECONDS)
   async handleCron() {
     const keys = await this.redisService.keys('*');
 
