@@ -21,7 +21,7 @@ describe('Update Url UseCase', () => {
 
   const input = {
     id: '123',
-    updateUrlDto: { shortened_url: 'url' },
+    updateUrlDto: { original_url: 'url' },
     owner_id: '1',
   };
 
@@ -73,18 +73,6 @@ describe('Update Url UseCase', () => {
     expect(urlRepository.getOne).toHaveBeenCalledWith(input.id);
   });
 
-  it('should call url repository to get url by shortened url', async () => {
-    await updateUrlUseCase.execute(
-      input.id,
-      input.updateUrlDto,
-      input.owner_id,
-    );
-
-    expect(urlRepository.getByShortenedUrl).toHaveBeenCalledWith(
-      input.updateUrlDto.shortened_url,
-    );
-  });
-
   it('should call url repository to update url', async () => {
     await updateUrlUseCase.execute(
       input.id,
@@ -102,16 +90,6 @@ describe('Update Url UseCase', () => {
     await expect(
       updateUrlUseCase.execute(input.id, input.updateUrlDto, 'another_user'),
     ).rejects.toThrow(new BadRequestException('Url does not belong to you!'));
-  });
-
-  it('should throw error if url already exists', async () => {
-    jest
-      .spyOn(urlRepository, 'getByShortenedUrl')
-      .mockImplementation(async () => url);
-
-    await expect(
-      updateUrlUseCase.execute(input.id, input.updateUrlDto, input.owner_id),
-    ).rejects.toThrow(new BadRequestException('Url already exists!'));
   });
 
   it('should throw error if url not found', async () => {
