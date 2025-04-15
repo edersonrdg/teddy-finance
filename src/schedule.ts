@@ -24,6 +24,7 @@ export class SyncCountService {
       const count = await this.redisService.get(key);
       const url = await this.urlRepository.getOne(id);
 
+      // 
       if (url) {
         await this.urlRepository.incrementClicks(url, parseInt(count));
         await this.redisService.del(key);
